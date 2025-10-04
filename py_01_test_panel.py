@@ -1,11 +1,14 @@
-# Create our own function
-def hello(to="world"):
-    print("hello,", to)
+def main():
+    x = get_int("What's x? ")
+    print(f"x is {x}")
 
 
-# Output using our own function
-name = input("What's your name? ")
-hello(name)
+def get_int(a):
+    while True:
+        try:
+            return int(input(a))
+        except ValueError:
+            pass
 
-# Output without passing the expected arguments
-hello()
+
+main()
