@@ -24,7 +24,16 @@ print("hello, world)
 - Notice that we intentionally left out a quotation mark.
 - Running `python hello.py` in the terminal produces a **SyntaxError**. Syntax errors generally mean you should double‑check that you typed your code correctly.
 - You can learn more in Python’s documentation on <mark>Errors and Exceptions</mark> (https://docs.python.org/3/tutorial/errors.html).
-
+```
+Different Types of Errors You Can find:
+Error Type	When to Use
+ValueError	When a value is invalid (e.g., negative age)
+TypeError	When data type is wrong (e.g., adding string + int)
+ZeroDivisionError	When dividing by zero
+IndexError	When accessing invalid list index
+KeyError	When a dict key doesn’t exist
+RuntimeError	Generic catch-all for something unexpected
+```
 ---
 
 ## Runtime Errors
