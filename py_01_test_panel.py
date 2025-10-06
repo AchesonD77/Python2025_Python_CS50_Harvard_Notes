@@ -1,14 +1,5 @@
-def main():
-    x = get_int("What's x? ")
-    print(f"x is {x}")
+import cowsay
+import sys
 
-
-def get_int(a):
-    while True:
-        try:
-            return int(input(a))
-        except ValueError:
-            pass
-
-
-main()
+if len(sys.argv) == 2:
+    cowsay.trex("hello, " + sys.argv[1])
