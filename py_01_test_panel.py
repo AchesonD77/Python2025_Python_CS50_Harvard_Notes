@@ -1,5 +1,11 @@
-import cowsay
-import sys
+def main():
+    name = input("What's your name? ")
+    hello(name)
 
-if len(sys.argv) == 2:
-    cowsay.trex("hello, " + sys.argv[1])
+
+def hello(to="world"):
+    print("hello,", to)
+
+
+if __name__ == "__main__":
+    main()
