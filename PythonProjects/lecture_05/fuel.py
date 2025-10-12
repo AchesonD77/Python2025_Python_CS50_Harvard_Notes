@@ -30,32 +30,43 @@ End the function and give back a value.
 
 
 def main():
-    fraction = get_fraction()
-    percentage = round(fraction * 100)
-
-    if percentage <= 1:
-        print("E")
-    elif percentage >= 99:
-        print("F")
-    else:
-        print(f"{percentage}%")
-
-
-def get_fraction():
     while True:
         try:
-            x, y = input("Fraction: ").split("/")
+            fraction = input("Fraction: ")
+            percentage = convert(fraction)
+            print(gauge(percentage))
+            break
+        except (ValueError, ZeroDivisionError):
+            pass
+
+
+def gauge(percentage):
+    if percentage <= 1:
+        return "E"
+    elif percentage >= 99:
+        return "F"
+    else:
+        return f"{percentage}%"
+
+
+def convert(fraction):
+        try:
+            x, y = fraction.split("/")
             x = int(x)
             y = int(y)
+        except (ValueError, AttributeError):
+            raise ValueError("Invalid input format")
 
-            if y == 0 or x > y or x < 0 or y < 0:
-                continue
 
-            return x / y
-        except ValueError:
-            pass
-        except ZeroDivisionError:
-            pass
+        # check that x and y are positive and valid, Avoid division by zero, Invalid if numerator > denominator
+        if y == 0:
+            raise ZeroDivisionError("Denominator cannot be zero")
+        if x > y:
+            raise ValueError("Numerator cannot be greater than denominator")
+
+        percentage = round((x / y) * 100)
+        return  percentage
+
 
 if __name__ == '__main__':
     main()
