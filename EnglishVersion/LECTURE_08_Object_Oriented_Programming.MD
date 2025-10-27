@@ -253,6 +253,8 @@ class Student:
 
 ## Decorators / Properties
 *Goal:* keep dot syntax while validating on set. Use **`@property`** and store data in a “private-ish” attribute (e.g., `_house`).
+- Properties can be utilized to harden our code. In Python, we define properties using function “decorators”, which begin with @.
+- In addition to the name of the house, we can protect the name of our student as well. Modify your code as follows:
 
 ```py
 class Student:
@@ -284,7 +286,29 @@ class Student:
         if v not in {"Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"}:
             raise ValueError("Invalid house")
         self._house = v
+
+def main():
+    student = get_student()
+    print(student)
+
+
+def get_student():
+    name = input("Name: ")
+    house = input("House: ")
+    return Student(name, house)
+
+
+if __name__ == "__main__":
+    main()
 ```
+> The text explains the use of the @property decorator in Python to define class attributes, enabling a more controlled and Pythonic way of interacting with an object's state.
+
+> 1. Defining a Property (@property): By placing @property above a function (e.g., house), the function is converted into a class property. Accessing the attribute (e.g., student.house) now calls this property's getter function.
+> 2. The Setter (@house.setter): A setter function is defined using the @property_name.setter decorator. This function is automatically called whenever the property is assigned a new value (e.g., student.house = "Gryffindor").
+> 3. Encapsulation and Validation: The setter's primary role is to validate the input value. The example shows how the setter checks if the assigned value is one of the valid "Harry Potter houses" and raises a ValueError if it's not.
+> 4. The Internal Attribute (_house): The property manages the actual data through an internal class attribute, typically named with a leading underscore (e.g., _house). This underscore indicates that the attribute is private/protected and should only be modified via the defined setter method, not directly by the user.
+
+- You can learn more in Python’s documentation of methods. https://docs.python.org/3/tutorial/classes.html
 
 <mark>Rule of thumb:</mark> **Validate once** (inside setter/constructor) and reuse everywhere.
 
@@ -307,6 +331,32 @@ Methods like `str.lower`, `list.append`, etc., are **class methods** on those bu
 ## Class Methods
 Use **`@classmethod`** to add behavior on the class as a whole.
 
+- Sometimes, we want to add functionality to a class itself, not to instances of that class.
+- @classmethod is a function that we can use to add functionality to a class as a whole.
+
+
+- Here’s an example of not using a class method. In your terminal window, type code hat.py and code as follows:
+
+```python
+import random
+
+
+class Hat:
+    def __init__(self):
+        self.houses = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]
+
+    def sort(self, name):
+        print(name, "is in", random.choice(self.houses))
+
+
+hat = Hat()
+hat.sort("Harry")
+```
+- Notice how when we pass the name of the student to the sorting hat, it will tell us what house is assigned to the student. Notice that hat = Hat() instantiates a hat. The sort functionality is always handled by the instance of the class Hat. By executing hat.sort("Harry"), we pass the name of the student to the sort method of the particular instance of Hat, which we’ve called hat.
+  
+
+
+- We may want, though, to run the sort function without creating a particular instance of the sorting hat (there’s only one, after all!). We can modify our code as follows:
 ```py
 import random
 
@@ -319,6 +369,8 @@ class Hat:
 
 Hat.sort("Harry")
 ```
+- Notice how the __init__ method is removed because we don’t need to instantiate a hat anywhere in our code. self, therefore, is no longer relevant and is removed. We specify this sort as a @classmethod, replacing self with cls. Finally, notice how Hat is capitalized by convention near the end of this code, because this is the name of our class.
+
 
 You can also use a classmethod as an **alternative constructor**:
 
@@ -336,6 +388,8 @@ class Student:
         return cls(name, house)
 ```
 
+- Notice that get_student is removed and a @classmethod called get is created. This method can now be called without having to create a student first.
+
 ---
 
 ## Static Methods
@@ -345,7 +399,8 @@ class Student:
 
 ## Inheritance
 Share/extend behavior across types.
-
+- Inheritance is, perhaps, the most powerful feature of object-oriented programming.
+- It just so happens that you can create a class that “inherits” methods, variables, and attributes from another class.
 ```py
 class Wizard:
     def __init__(self, name):
@@ -362,16 +417,39 @@ class Professor(Wizard):
         super().__init__(name)
         self.subject = subject
 ```
+- Notice that there is a class above called Wizard and a class called Student. Further, notice that there is a class called Professor. Both students and professors have names. Also, both students and professors are wizards. Therefore, both Student and Professor inherit the characteristics of Wizard. Within the “child” class Student, Student can inherit from the “parent” or “super” class Wizard as the line super().\__init__(name) runs the init method of Wizard. Finally, notice that the last lines of this code create a wizard called Albus, a student called Harry, and so on.
+
 
 ---
 
 ## Inheritance and Exceptions
 Exceptions form a **hierarchy** (e.g., `ValueError` ⊂ `Exception`). Catch a parent to handle children when appropriate. See Python docs for the full tree.
-
----
+- While we have just introduced inheritance, we have been using this all along during our use of exceptions.
+- It just so happens that exceptions come in a hierarchy, where there are children, parent, and grandparent classes. These are illustrated below:
+```
+  BaseException
+ +-- KeyboardInterrupt
+ +-- Exception
+      +-- ArithmeticError
+      |    +-- ZeroDivisionError
+      +-- AssertionError
+      +-- AttributeError
+      +-- EOFError
+      +-- ImportError
+      |    +-- ModuleNotFoundError
+      +-- LookupError
+      |    +-- KeyError
+      +-- NameError
+      +-- SyntaxError
+      |    +-- IndentationError
+      +-- ValueError
+ ...
+ ```
+- You can learn more in Python’s documentation of exceptions. https://docs.python.org/3/library/exceptions.html
 
 ## Operator Overloading
 Give your types arithmetic/text behavior via **dunder** methods.
+- Some operators such as + and - can be “overloaded” such that they can have more abilities beyond simple arithmetic.
 
 ```py
 class Vault:
@@ -392,9 +470,22 @@ print(potter)       # uses __str__
 print(weasley)
 print(potter + weasley)  # uses __add__
 ```
+- Notice how the __str__ method returns a formatted string. Further, notice how the __add__ method allows for the addition of the values of two vaults. self is what is on the left of the + operand. other is what is right of the +.
 
+- You can learn more in Python’s documentation of operator overloading. https://docs.python.org/3/reference/datamodel.html#special-method-names
 ---
 
 ## Summing Up
+- Now, you’ve learned a whole new level of capability through object-oriented programming.
+  
 - <mark>Core skills:</mark> **OOP**, **Classes**, **`raise`**, **`@property`**, **`@classmethod`/`@staticmethod`**, **Inheritance**, **Operator Overloading**.  
 - *Design heuristics:* centralize validation, expose safe attributes via properties, prefer clear invariants, and overload responsibly.
+```
+Object-oriented programming
+Classes
+raise
+Class Methods
+Static Methods
+Inheritance
+Operator Overloading
+```
