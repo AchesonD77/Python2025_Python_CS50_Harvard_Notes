@@ -290,6 +290,9 @@ print(meows, end="")
 
 ## Docstrings
 
+- A standard way of commenting your function’s purpose is to use a docstring.
+  
+- You can use docstrings to standardize how you document the features of a function. 
 - A **docstring** documents a function/class/module. Triple quotes below the definition:
 
 ```py
@@ -304,14 +307,38 @@ def meow(n: int) -> str:
     """
     return "meow\n" * n
 ```
+- Notice how multiple docstring arguments are included. For example, it describes the parameters taken by the function and what is returned by the function.
+  
 
 - Tools like **Sphinx** can render docstrings into HTML/PDF. <mark>Good docs are part of good code.</mark>
-
+- You can learn more in Python’s documentation of docstrings. https://peps.python.org/pep-0257/
 ---
 
 ## argparse
 
 - Parse command‑line arguments robustly with **argparse**.
+
+
+- Suppose we want to use command-line arguments in our program. 
+```python
+import sys
+
+if len(sys.argv) == 1:
+    print("meow")
+elif len(sys.argv) == 3 and sys.argv[1] == "-n":
+    n = int(sys.argv[2])
+    for _ in range(n):
+        print("meow")
+else:
+    print("usage: meows.py [-n NUMBER]")
+```
+- Notice how sys is imported, from which we get access to sys.argv, an array of command-line arguments given to our program when run. We can use several if statements to check whether the user has run our program properly.
+- Let’s assume that this program will be getting much more complicated. How could we check all the arguments that could be inserted by the user? We might give up if we have more than a few command-line arguments!
+
+
+- Luckily, argparse is a library that handles all the parsing of complicated strings of command-line arguments. 
+
+
 
 ```py
 import argparse
@@ -323,30 +350,84 @@ args = parser.parse_args()
 for _ in range(args.n):
     print("meow")
 ```
+- Notice how argparse is imported instead of sys. An object called parser is created from an ArgumentParser class. That class’s add_argument method is used to tell argparse what arguments we should expect from the user when they run our program. Finally, running the parser’s parse_args method ensures that all of the arguments have been included properly by the user.
 
+- Notice how the user is provided some documentation. Specifically, a help argument is provided. Now, if the user executes python meows.py --help or -h, the user will be presented with some clues about how to use this program.
+
+- Notice how not only is help documentation included, but you can provide a default value when no arguments are provided by the user.
+
+
+- You can learn more in Python’s documentation of argparse. https://docs.python.org/3/library/argparse.html
 ---
 
 ## Unpacking
 
-- Split inputs into variables:
+- Would it not be nice to be able to split a single variable into two variables?
 
 ```py
 first, _ = input("What's your name? ").split(" ")
 print(f"hello, {first}")
 ```
+- Notice how this program tries to get a user’s first name by naively splitting on a single space.
 
-- More powerful unpacking in functions:
+
+- What if we wanted to store our coins in a list?
+```python
+def total(galleons, sickles, knuts):
+    return (galleons * 17 + sickles) * 29 + knuts
+
+
+coins = [100, 50, 25]
+
+print(total(*coins), "Knuts")
+``` 
+- Suppose that we could pass in the names of the currency in any order?
+```python
+def total(galleons, sickles, knuts):
+    return (galleons * 17 + sickles) * 29 + knuts
+
+
+print(total(galleons=100, sickles=50, knuts=25), "Knuts")
+```
+- Notice how this still calculates correctly.
+
+
+- When you start talking about “names” and “values,” dictionaries might start coming to mind! You can implement this as a dictionary. In the text editor window, code as follows:
+```python
+def total(galleons, sickles, knuts):
+    return (galleons * 17 + sickles) * 29 + knuts
+
+
+coins = {"galleons": 100, "sickles": 50, "knuts": 25}
+
+print(total(coins["galleons"], coins["sickles"], coins["knuts"]), "Knuts")
+```
+- Since the total function expects three arguments, we cannot pass in a dictionary. We can use unpacking to help with this. In the text editor window, code as follows:
+```python
+def total(galleons, sickles, knuts):
+    return (galleons * 17 + sickles) * 29 + knuts
+
+
+coins = {"galleons": 100, "sickles": 50, "knuts": 25}
+
+print(total(**coins), "Knuts")
+```  
+
+- Notice how ** allows you to unpack a dictionary. When unpacking a dictionary, it provides both the keys and values.
+  
+
+
+- Notice how a * unpacks the sequence of the list of coins and passes in each of its individual elements to total.
+
 
 ```py
 def total(galleons, sickles, knuts):
     return (galleons * 17 + sickles) * 29 + knuts
 
-coins = [100, 50, 25]
-print(total(*coins), "Knuts")     # list unpacking
-
-coins = {"galleons": 100, "sickles": 50, "knuts": 25}
-print(total(**coins), "Knuts")    # dict unpacking
+print(total(*[100, 50, 25]), "Knuts")
+print(total(**{"galleons":100, "sickles":50, "knuts":25}), "Knuts")
 ```
+
 
 ---
 
