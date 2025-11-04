@@ -1,11 +1,11 @@
-def main():
-    name = input("What's your name? ")
-    hello(name)
+def f(*args, **kwargs):
+    print("Positional:", args)
 
 
-def hello(to="world"):
-    print("hello,", to)
+f(100, 50, 25)
+
+def f(*args, **kwargs):
+    print("Named:", kwargs)
 
 
-if __name__ == "__main__":
-    main()
+f(galleons=100, sickles=50, knuts=25)

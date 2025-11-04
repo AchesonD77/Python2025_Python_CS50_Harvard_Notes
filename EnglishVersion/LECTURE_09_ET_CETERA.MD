@@ -435,6 +435,11 @@ print(total(**{"galleons":100, "sickles":50, "knuts":25}), "Knuts")
 
 - `*args` collects positional arguments; `**kwargs` collects keyword arguments.
 
+
+- args are positional arguments, such as those we provide to print like print("Hello", "World").
+- kwargs are named arguments, or “keyword arguments”, such as those we provide to print like print(end="").
+
+
 ```py
 def f(*args, **kwargs):
     print("Positional:", args)
@@ -442,46 +447,120 @@ def f(*args, **kwargs):
 
 f(100, 50, 25, galleons=100, sickles=50, knuts=25)
 ```
-
+- As we see in the prototype for the print function above, we can tell our function to expect a presently unknown number positional arguments. We can also tell it to expect a presently unknown number of keyword arguments.
+- Notice how the named values are provided in the form of a dictionary.
+- You can learn more in Python’s documentation of print.  https://docs.python.org/3/library/functions.html#print
 ---
 
 ## map
 
 - Functional style: apply a function to each element.
 
-```py
-def yell(word): print(word.upper())
-
-def main():
-    yell("This")
-    yell("is")
-    yell("CS50")
-
-def main():
-    yell(*map(str.upper, ["This", "is", "CS50"]))
-```
-
-- Or gather results:
+- Wouldn’t it be nice to yell a list of unlimited words?
 
 ```py
-words = ["This", "is", "CS50"]
-uppercased = list(map(str.upper, words))
-print(uppercased)
-```
+def main():
+    yell(["This", "is", "CS50"])
 
+
+def yell(words):
+    uppercased = []
+    for word in words:
+        uppercased.append(word.upper())
+    print(*uppercased)
+
+
+if __name__ == "__main__":
+    main()
+```
+- Notice we accumulate the uppercase words, iterating over each of the words and “uppercasing” them. The uppercase list is printed utilizing the * to unpack it.
+
+
+- Removing the brackets, we can pass the words in as arguments. 
+```python
+def main():
+    yell("This", "is", "CS50")
+
+
+def yell(*words):
+    uppercased = []
+    for word in words:
+        uppercased.append(word.upper())
+    print(*uppercased)
+
+
+if __name__ == "__main__":
+    main()
+```
+- Notice how *words allows for many arguments to be taken by the function.
+
+
+- map allows you to map a function to a sequence of values. In practice, we can code as follows:
+```py
+def main():
+    yell("This", "is", "CS50")
+
+
+def yell(*words):
+    uppercased = map(str.upper, words)
+    print(*uppercased)
+
+
+if __name__ == "__main__":
+    main()
+```
+- Notice how map takes two arguments. First, it takes a function we want applied to every element of a list. Second, it takes that list itself, to which we’ll apply the aforementioned function. Hence, all words in words will be handed to the str.upper function and returned to uppercased.
+
+- You can learn more in Python’s documentation of map. https://docs.python.org/3/library/functions.html#map
+__
 ---
 
 ## List Comprehensions
 
+- List comprehensions allow you to create a list on the fly in one elegant one-liner.
 - Create lists in one line:
 
 ```py
-words = ["This", "is", "CS50"]
-uppercased = [arg.upper() for arg in words]
-print(uppercased)
+def main():
+    yell("This", "is", "CS50")
+
+
+def yell(*words):
+    uppercased = [arg.upper() for arg in words]
+    print(*uppercased)
+
+
+if __name__ == "__main__":
+    main()
+
 ```
+- Notice how instead of using map, we write a Python expression within square brackets. For each argument, .upper is applied to it.
+
+
 
 - Filter while building:
+- another program
+
+```python
+students = [
+    {"name": "Hermione", "house": "Gryffindor"},
+    {"name": "Harry", "house": "Gryffindor"},
+    {"name": "Ron", "house": "Gryffindor"},
+    {"name": "Draco", "house": "Slytherin"},
+]
+
+gryffindors = []
+for student in students:
+    if student["house"] == "Gryffindor":
+        gryffindors.append(student["name"])
+
+for gryffindor in sorted(gryffindors):
+    print(gryffindor)
+```
+- Notice we have a conditional while we’re creating our list. If the student’s house is Gryffindor, we append the student to the list of names. Finally, we print all the names.
+
+
+- More elegantly, we can simplify this code with a list comprehension as follows:
 
 ```py
 students = [
@@ -494,6 +573,7 @@ gryffindors = [student["name"] for student in students if student["house"] == "G
 for g in sorted(gryffindors):
     print(g)
 ```
+- Notice how the list comprehension is on a single line!
 
 ---
 
