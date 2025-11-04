@@ -589,22 +589,32 @@ students = [
     {"name": "Draco", "house": "Slytherin"},
 ]
 
-def is_gryffindor(s): return s["house"] == "Gryffindor"
+def is_gryffindor(s): 
+    return s["house"] == "Gryffindor" # True or False
 
 gryffindors = filter(is_gryffindor, students)
-for g in sorted(gryffindors, key=lambda s: s["name"]):
-    print(g["name"])
 
 # Lambda version
 gryffindors = filter(lambda s: s["house"] == "Gryffindor", students)
-```
 
+
+for g in sorted(gryffindors, key=lambda s: s["name"]):
+    print(g["name"])
+```
+- Notice how a function called is_gryffindor is created. This is our filtering function that will take a student s, and return True or False depending on whether the student’s house is Gryffindor. 
+- You can see the new filter function takes two arguments. First, it takes the function that will be applied to each element in a sequence—in this case, is_gryffindor. Second, it takes the sequence to which it will apply the filtering function—in this case, students. In gryffindors, we should see only those students who are in Gryffindor.
+- Notice how the same list of students is provided.
+
+- You can learn more in Python’s documentation of filter. https://docs.python.org/3/library/functions.html#filter
 ---
 
 ## Dictionary Comprehensions
 
+- We can apply the same idea behind list comprehensions to dictionaries. 
+
 ```py
 students = ["Hermione", "Harry", "Ron"]
+
 gryffindors = [{"name": student, "house": "Gryffindor"} for student in students]
 print(gryffindors)
 
@@ -612,10 +622,15 @@ print(gryffindors)
 gryffindors = {student: "Gryffindor" for student in students}
 print(gryffindors)
 ```
+- Notice how all the prior code is simplified into a single line where the structure of the dictionary is provided for each student in students.
+- Notice how the dictionary will be constructed with key-value pairs.
 
 ---
 
 ## enumerate
+
+- Utilizing enumeration, we can do the same: 
+We may wish to provide some ranking of each student. 
 
 - Iterate with an index:
 
@@ -624,7 +639,13 @@ students = ["Hermione", "Harry", "Ron"]
 
 for i, student in enumerate(students, start=1):
     print(i, student)
+
+    # default version, without start=1
+for i, student in enumerate(students):
+    print(i + 1, student)
 ```
+- Notice how enumerate presents the index and the value of each student.
+- You can learn more in Python’s documentation of enumerate. https://docs.python.org/3/library/functions.html#enumerate
 
 ---
 
