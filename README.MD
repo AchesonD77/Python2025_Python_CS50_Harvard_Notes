@@ -2,6 +2,8 @@
 **Author:** AchesonD77 (Dan)  
 **Course:** Harvard CS50’s Introduction to Programming with Python (CS50P)
 
+**Course Website:** https://cs50.harvard.edu/python/
+
 > This repository is my bilingual (English + 中文) notebook for CS50P. It contains clean lecture notes, summaries, and my own practice projects organized by lecture.
 
 ---
