@@ -1,11 +1,8 @@
-def f(*args, **kwargs):
-    print("Positional:", args)
+import cowsay
+import pyttsx3
 
-
-f(100, 50, 25)
-
-def f(*args, **kwargs):
-    print("Named:", kwargs)
-
-
-f(galleons=100, sickles=50, knuts=25)
+engine = pyttsx3.init()
+this = input("what's this? ")
+cowsay.cow(this)
+engine.say(this)
+engine.runAndWait()

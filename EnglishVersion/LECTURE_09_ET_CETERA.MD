@@ -660,23 +660,55 @@ n = int(input("what's n? "))
 for i in range(n):
     print("🐑" * i)
 ```
+- Notice how this program will count the number of sheep you ask of it.
+
 
 Refactor with functions:
-
+- We have been getting into the habit of abstracting away parts of our code.
+- We can call a sheep function by modifying our code as follows:
 ```py
 def main():
-    n = int(input("what's n? "))
+    n = int(input("What's n? "))
+    for i in range(n):
+        print(sheep(i))
+
+
+def sheep(n):
+    return "🐑" * n
+
+
+if __name__ == "__main__":
+    main()
+```
+- Notice how the main function does the iteration.
+
+We can provide the sheep function more abilities. In the text editor window, code as follows:
+```python
+def main():
+    n = int(input("What's n? "))
     for s in sheep(n):
         print(s)
+
 
 def sheep(n):
     flock = []
     for i in range(n):
         flock.append("🐑" * i)
     return flock
+
+
+if __name__ == "__main__":
+    main()
 ```
+- Notice how we create a flock of sheep and return the flock.
+
+
+Executing our code, you might try different numbers of sheep such as 10, 1000, and 10000. What if you asked for 1000000 sheep, your program might completely hang or crash. Because you have attempted to generate a massive list of sheep, your computer may be struggling to complete the computation.
 
 Use a **generator** to stream results:
+
+- The yield generator can solve this problem by returning a small bit of the results at a time. In the text editor window, code as follows:
+
 
 ```py
 def main():
@@ -687,9 +719,14 @@ def main():
 def sheep(n):
     for i in range(n):
         yield "🐑" * i   # yields one at a time
-```
 
-<mark>Benefit:</mark> constant memory, even for huge `n`. See Python docs on **generators** and **iterators**.
+if __name__ == "__main__":
+    main()
+```
+- Notice how yield provides only one value at a time while the for loop keeps working.
+
+
+<mark>Benefit:</mark> constant memory, even for huge `n`. See Python docs on **generators** https://docs.python.org/3/howto/functional.html#generators and **iterators** https://docs.python.org/3/howto/functional.html#iterators.
 
 ---
 
