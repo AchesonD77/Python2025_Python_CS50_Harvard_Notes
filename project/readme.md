@@ -1,8 +1,8 @@
 # IoT Data Inspector & Query Tool
 *CS50 Final Project — Python*
 
-#### Video Demo: <URL HERE>
-#### Short URL: <URL HERE>
+#### Video Demo: https://youtu.be/yqsJlwNBczY
+#### Short URL: https://youtu.be/yqsJlwNBczY
 #### Author: Dan (Acheson Dan)
 
 ---
