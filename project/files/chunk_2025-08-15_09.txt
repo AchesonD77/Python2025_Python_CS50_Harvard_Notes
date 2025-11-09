@@ -1,0 +1,14 @@
+Data: 2025-08-15
+Hour range: 09:00 - 10:00
+
+Temperature: median 33.9°C, max 34.1°C, min 33.7°C
+Humidity: median 43.2%
+IEQ median: 20 (optimal)
+CO₂: 422–429 ppm (optimal)
+PM2.5: 5.3 µg/m³ (good)
+illuminance: median 6 lux
+
+Soil moisture (pot/plant): n.d.
+
+Door events:
+- No relevant event

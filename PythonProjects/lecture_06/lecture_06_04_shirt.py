@@ -56,7 +56,7 @@ Result → your face appears behind the virtual “I took CS50” shirt 😎.
 
 6️⃣ Save the Final Image
 image.save(output_file)
-This writes your final composite image (e.g., output.jpg) into your folder.
+This writes your final composite image (e.g., output.jpg) into your project.
 
 
 """
